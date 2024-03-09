@@ -156,8 +156,8 @@ def draw_points(points, colorp='b', size=100):
 def n_points_array(n, m, theta=0):
     points = []
     for i in range(m):
-        points += n_points(n, np.sqrt(2*np.cos(np.pi/n))**i, i*(np.pi/n+theta))
-        points += n_points(n, np.sqrt(2*np.cos(np.pi/n))
+        points += n_points(n, (np.cos(np.pi/n))**i, i*(np.pi/n+theta))
+        points += n_points(n, (np.cos(np.pi/n))
                            ** (-i), i*(np.pi/n-theta))
     return points
 
@@ -166,8 +166,8 @@ def n_points_array(n, m, theta=0):
 def n_points_array_inner(n, m, theta=0):
     points = []
     for i in range(m):
-        points += n_points(n, np.sqrt(2*np.cos(np.pi/n))
-                           ** (-i-1), i*(np.pi/n+theta))
+        points += n_points(n, (np.cos(np.pi/n))
+                           ** i, i*(np.pi/n+theta))
     return points
 
 
@@ -175,7 +175,24 @@ def n_points_array_inner(n, m, theta=0):
 def n_points_array_outer(n, m, theta=0):
     points = []
     for i in range(m):
-        points += n_points(n, np.sqrt(2*np.cos(np.pi/n))**i, i*(np.pi/n+theta))
+        points += n_points(n, (np.cos(np.pi/n))
+                           ** (-i), i*(np.pi/n+theta))
+    return points
+
+
+def n_points_array_outer_rotate(n, m, alpha=0, theta=0):
+    points = []
+    for i in range(m):
+        points += n_points(n, (np.cos(np.pi/n))
+                           ** (-i), alpha+i*(np.pi/n+theta))
+    return points
+
+
+def n_points_array_inner_rotate(n, m, alpha=0, theta=0):
+    points = []
+    for i in range(m):
+        points += n_points(n, (np.cos(np.pi/n))
+                           ** (i), alpha+i*(np.pi/n+theta))
     return points
 # 画N边形点阵
 # n:边数
@@ -185,9 +202,9 @@ def n_points_array_outer(n, m, theta=0):
 def draw_n_points_array(n, m, theta=0, color='b', size=100):
     for i in range(m):
         draw_points(
-            n_points(n, np.sqrt(2*np.cos(np.pi/n))**i, i*(np.pi/n+theta)), color, size)
+            n_points(n, (np.cos(np.pi/n))**i, i*(np.pi/n+theta)), color, size)
         draw_points(
-            n_points(n, np.sqrt(2*np.cos(np.pi/n))**(-i), i*(np.pi/n-theta)), color, size)
+            n_points(n, (np.cos(np.pi/n))**(-i), i*(np.pi/n-theta)), color, size)
 
 # 向外画点阵
 
@@ -195,7 +212,7 @@ def draw_n_points_array(n, m, theta=0, color='b', size=100):
 def draw_n_points_array_outer(n, m, theta=0, color='b', size=100):
     for i in range(m):
         draw_points(
-            n_points(n, np.sqrt(2*np.cos(np.pi/n))**i, i*(np.pi/n+theta)), color, size)
+            n_points(n, (np.cos(np.pi/n))**(-i), i*(np.pi/n+theta)), color, size)
 
 # 向内画点阵
 
@@ -203,8 +220,16 @@ def draw_n_points_array_outer(n, m, theta=0, color='b', size=100):
 def draw_n_points_array_inner(n, m, theta=0, color='b', size=100):
     for i in range(m):
         draw_points(
-            n_points(n, np.sqrt(2*np.cos(np.pi/n))**(-i-1), i*(np.pi/n-theta)), color, size)
+            n_points(n, (np.cos(np.pi/n))**(i), i*(np.pi/n-theta)), color, size)
 
+
+def swastika(N, R=1, theta=0):
+    points = [(R*np.sqrt(2)**i*np.cos(i*np.pi/4+theta), R*np.sqrt(2)
+               ** i*np.sin(i*np.pi/4+theta)) for i in range(N)]
+    return points
+
+
+# draw_points(swastika(4, 1, 0), 'g', 300)
 # draw_points(n_points(16, 1))
 # draw_points(n_points(6, 1/2, np.pi), 300, 'g')
 
@@ -213,8 +238,10 @@ def draw_n_points_array_inner(n, m, theta=0, color='b', size=100):
 # draw_n_points_array(8, 3, np.pi/3)
 
 # draw_points(n_points_array_outer(8, 3, np.pi/3), 'g', 300)
-# draw_n_points_array_outer(8, 3, np.pi/3, 'r')
-# draw_points(n_points_array_inner(12, 3, -np.pi/3), 'g', 300)
-# draw_n_points_array_inner(12, 3, -np.pi/3, 'b')
+# draw_points(n_points_array_outer(4, 3, 0), 'g', 300)
+# draw_points(n_points_array_inner(4, 3, 0), 'r', 300)
+# # draw_n_points_array_outer(8, 3, np.pi/3, 'r')
+# # draw_points(n_points_array_inner(12, 3, -np.pi/3), 'g', 300)
+# # draw_n_points_array_inner(12, 3, -np.pi/3, 'b')
 # plt.axis('equal')
 # plt.show()

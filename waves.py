@@ -62,55 +62,55 @@ colors = ['r', 'orange', 'yellow', 'green', 'blue', 'purple',
 # 向外
 
 
-def wave_circle_ari_o(A, F, P, color, R=1):
+def wave_circle_ari_o(A, F, P, color, theta=0, R=1):
     ConcentricCircles_o((0, 0), F, A, R, 'g')
     for i in range(P+1):
-        ConcentricCircles_o((np.cos(i*2*np.pi/P+np.pi/2),
-                            np.sin(i*2*np.pi/P+np.pi/2)), F, A, R, 'g')
+        ConcentricCircles_o((np.cos(i*2*np.pi/P+np.pi/2+theta),
+                            np.sin(i*2*np.pi/P+np.pi/2+theta)), F, A, R, color)
 # 向内
 
 
-def wave_circle_ari_i(A, F, P, color, R=1):
+def wave_circle_ari_i(A, F, P, color, theta=0, R=1):
     ConcentricCircles_i((0, 0), F, A, R, 'g')
     for i in range(P+1):
-        ConcentricCircles_i((np.cos(i*2*np.pi/P+np.pi/2),
-                            np.sin(i*2*np.pi/P+np.pi/2)), F, A, R, 'g')
+        ConcentricCircles_i((np.cos(i*2*np.pi/P+np.pi/2+theta),
+                            np.sin(i*2*np.pi/P+np.pi/2+theta)), F, A, R, color)
 
 # 双向
 
 
-def wave_circle_ari(A, F, P, color, R=1):
+def wave_circle_ari(A, F, P, color, theta=0, R=1):
     ConcentricCircles((0, 0), F, A, R, 'g')
     for i in range(P+1):
-        ConcentricCircles((np.cos(i*2*np.pi/P+np.pi/2),
-                           np.sin(i*2*np.pi/P+np.pi/2)), F, A, R, 'g')
+        ConcentricCircles((np.cos(i*2*np.pi/P+np.pi/2+theta),
+                           np.sin(i*2*np.pi/P+np.pi/2+theta)), F, A, R, color)
 
 
 # 等比
 
 
 # 向外
-def wave_circle_pro_o(A, F, P, color, R=1):
+def wave_circle_pro_o(A, F, P, color, theta=0, R=1):
     ConcentricCircles_Pro_o((0, 0), F, np.sqrt(A), R, color)
     for i in range(P+1):
         ConcentricCircles_Pro_o(
-            ((np.cos(i*2*np.pi/P+np.pi/2)), np.sin(i*2*np.pi/P+np.pi/2)), F, np.sqrt(A), R, color)
+            ((np.cos(i*2*np.pi/P+np.pi/2+theta)), np.sin(i*2*np.pi/P+np.pi/2+theta)), F, np.sqrt(A), R, color)
 
 
 # 向内
-def wave_circle_pro_i(A, F, P, color, R=1):
+def wave_circle_pro_i(A, F, P, color, theta=0, R=1):
     ConcentricCircles_Pro_i((0, 0), F, np.sqrt(A), R, color)
     for i in range(P+1):
         ConcentricCircles_Pro_i(
-            ((np.cos(i*2*np.pi/P+np.pi/2)), np.sin(i*2*np.pi/P+np.pi/2)), F, np.sqrt(A), R, color)
+            ((np.cos(i*2*np.pi/P+np.pi/2+theta)), np.sin(i*2*np.pi/P+np.pi/2+theta)), F, np.sqrt(A), R, color)
 # 双向
 
 
-def wave_circle_pro(A, F, P, color, R=1):
+def wave_circle_pro(A, F, P, color, theta=0, R=1):
     ConcentricCircles_Pro((0, 0), F, np.sqrt(A), R, color)
     for i in range(P+1):
         ConcentricCircles_Pro(
-            ((np.cos(i*2*np.pi/P+np.pi/2)), np.sin(i*2*np.pi/P+np.pi/2)), F, np.sqrt(A), R, color)
+            ((np.cos(i*2*np.pi/P+np.pi/2+theta)), np.sin(i*2*np.pi/P+np.pi/2+theta)), F, np.sqrt(A), R, color)
 
 
 # plt.axis('off')
