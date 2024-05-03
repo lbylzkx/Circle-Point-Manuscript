@@ -1,2 +1,4 @@
 # 忽略images文件夹
 /images/
+# 忽略test文件夹
+/test/

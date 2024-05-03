@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from symmetric import *
+from arc import *
+# from symmetric import *
 import sys
 sys.path.append('C:/Userslbylzk/Documents/BaiduSyncdisk/Flowers')
 
@@ -59,34 +60,91 @@ def arc_inverse_dot(center, point1, point2):
     return [x, y]
 
 
-def arc_contour(center, point1, point2, color='b'):
-    arc = arc_dot(center, point1, point2)
-    # arc_inverse = arc_inverse_dot(center, point1, point2)
-    sym = symmetric_point(point1, point2, arc)
-    # 使用 np.concatenate 函数来拼接两个圆弧的坐标
-    # x = np.concatenate((arc[0], sym[0][::-1]))
-    # y = np.concatenate((arc[1], sym[1][::-1]))
+"""通过角度画圆弧
+"""
+
+
+def arc_degree_p(center, radius, angle1, angle2, color):
+    if angle1 < angle2:
+        angle = np.linspace(angle1, angle2, 1000)
+        x = center[0] + radius * np.cos(angle)
+        y = center[1] + radius * np.sin(angle)
+    return [x, y]
+
+
+def arc_degree_p_inverse(center, radius, angle1, angle2, color):
+    angle = np.linspace(angle2-2*np.pi, angle1, 1000)
+    x = center[0] + radius * np.cos(angle)
+    y = center[1] + radius * np.sin(angle)
+    return [x, y]
+
+
+# def arc_contour(center, point1, point2, color='b'):
+#     arc = arc_dot(center, point1, point2)
+#     # arc_inverse = arc_inverse_dot(center, point1, point2)
+#     sym = symmetric_point(point1, point2, arc)
+#     # 使用 np.concatenate 函数来拼接两个圆弧的坐标
+#     # x = np.concatenate((arc[0], sym[0][::-1]))
+#     # y = np.concatenate((arc[1], sym[1][::-1]))
+#     # X,Y轴等长
+#     plt.axis('equal')
+#     # 绘制圆弧
+#     plt.plot(arc[0], arc[1], color)
+#     plt.plot(sym[0], sym[1], color)
+
+
+# def arc_fill(center, point1, point2, color='b'):
+#     arc = arc_dot(center, point1, point2)
+#     arc_inverse = arc_inverse_dot(center, point1, point2)
+#     # 使用 np.concatenate 函数来拼接两个圆弧的坐标
+#     x = np.concatenate((arc[0], arc_inverse[0][::-1]))
+#     y = np.concatenate((arc[1], arc_inverse[1][::-1]))
+#     # X,Y轴等长
+#     plt.axis('equal')
+#     # 绘制圆弧
+#     plt.fill(x, y, color)
+
+
+def onearc_lily_n(center, r, n, theta, color='b'):
+    # (n-2)/n个圆弧
+    arc_degree(center, r, theta, theta+2*np.pi*(n-2)/n, color)
+
+
+def onearc_lily_n_inverse(center, r, n, theta, color='b'):
+    # (n-2)/n个圆弧
+    arc_degree_inverse(center, r, theta, theta+2*np.pi*(n-2)/n, color)
+
+
+def n_lily_petal_fill(center, r, n, theta, colorf='b', color='r', alpha=0.1):
+    alpha = np.pi/n
+    beta = np.pi-np.pi/n
+    center1 = (np.cos(theta+alpha)*r +
+               center[0], np.sin(theta+alpha)*r+center[1])
+    center2 = (np.cos(theta+alpha-2*np.pi/n)*r +
+               center[0], np.sin(theta+alpha-2*np.pi/n)*r+center[1])
+    # 圆心
+    # plt.plot(center1[0], center1[1], marker='o', color='r')
+    # plt.plot(center2[0], center2[1], marker='o', color='b')
+    arc = arc_degree_p(center1, r, alpha+np.pi+theta,
+                       alpha+np.pi+theta+np.pi*(n-2)/n, color)
+    arc_inverse = arc_degree_p_inverse(center2, r, beta+theta,
+                                       beta+theta+np.pi*(n+2)/n, color)
+    x = arc[0]
+    y = arc[1]
+    x1 = arc_inverse[0]
+    y1 = arc_inverse[1]
     # X,Y轴等长
     plt.axis('equal')
-    # 绘制圆弧
-    plt.plot(arc[0], arc[1], color)
-    plt.plot(sym[0], sym[1], color)
+    plt.fill(x, y, colorf)
+    plt.fill(x1, y1, colorf)
+    plt.plot(x, y, color, alpha)
+    plt.plot(x1, y1, color, alpha)
 
 
-def arc_fill(center, point1, point2, color='b'):
-    arc = arc_dot(center, point1, point2)
-    arc_inverse = arc_inverse_dot(center, point1, point2)
-    # 使用 np.concatenate 函数来拼接两个圆弧的坐标
-    x = np.concatenate((arc[0], arc_inverse[0][::-1]))
-    y = np.concatenate((arc[1], arc_inverse[1][::-1]))
-    # X,Y轴等长
-    plt.axis('equal')
-    # 绘制圆弧
-    plt.fill(x, y, color)
-
-
+# arc_degree_fill((0, 0), 1, 0, np.pi/2, 'r')
+# n_lily_petal_fill((0, 0), 1, 4, np.pi/2, 'b')
 # arc_fill((1, 1), (1, 0), (0, 0), 'g')
 # arc_contour((1, 1), (1, 0), (0, 0), 'r')
 # # arc_dot((1, 1), (1, 0), (0, 0))
-# # arc_inverse_dot((1, 1), (1, 0), (0, 0))
+# arc_inverse_dot((1, 1), (1, 0), (0, 0))
 # plt.show()

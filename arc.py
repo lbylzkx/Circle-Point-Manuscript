@@ -10,8 +10,6 @@ sys.path.append('C:/Userslbylzk/Documents/BaiduSyncdisk/Flowers')
 
 # 顺时针
 
-pi = math.pi
-
 
 def arc(center, point1, point2, color='b'):
     # 计算端点到圆心的向量

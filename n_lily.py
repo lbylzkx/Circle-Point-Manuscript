@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from arc import *
+from arc_fill import *
 import sys
 sys.path.append('C:/Userslbylzk/Documents/BaiduSyncdisk/Flowers')
 
@@ -156,6 +157,24 @@ def one_layer_flower_by_petal(center, R, n, theta, color):
     for i in range(0, n):
         one_petal(center, R, n, 2 * i * np.pi / n + theta, color)
 
+
+# 带填充的花瓣形成的花
+
+def one_petal_fill(center, r, n, theta, colorf='r', color='b'):
+    n_lily_petal_fill(center, r, n, theta+np.pi/2, colorf, color)
+
+
+def one_layer_flower_by_petal_fill(center, R, n, theta, colorf='r', color='b'):
+    for i in range(0, n):
+        one_petal_fill(center, R, n, 2 * i * np.pi /
+                       n + theta, colorf, color)
+
+
+def flower_by_petal_fill(center, r, M, N, n, theta, colorf='r', color='b'):
+    for j in range(1, M+1):
+        for i in range(0, N):
+            one_petal_fill(center, (np.sqrt(2*np.cos(np.pi/n))**(2*j-1)*r),
+                           n, 2*i*np.pi/N+(j-1)*np.pi/N+theta, colorf, color)
 # flower_by_petal((0, 0), 1, 3, 3, 5, 0, 'b')
 # plt.show()
 
@@ -210,4 +229,7 @@ def one_layer_flower_by_petal(center, R, n, theta, color):
 #               ** 2, n, i*np.pi/6+np.pi/12, 'g')
 #     one_petal((0, 0), np.sqrt(2*np.cos(np.pi/4))
 #               ** np.sqrt(9), n, i*np.pi/6, 'g')
+# one_layer_flower_by_petal_fill((0, 0), 1, 9, 0, '#0f0', 'b')
+# flower_by_petal_fill((0, 0), 1, 2, 12, 4, 0, '#f99', '#f00')
+
 # plt.show()
