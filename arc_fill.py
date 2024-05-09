@@ -141,10 +141,53 @@ def n_lily_petal_fill(center, r, n, theta, colorf='b', color='r', alpha=0.1):
     plt.plot(x1, y1, color, alpha)
 
 
+def n_mandala_petal_fill(center, R, r, n, theta=0, colorf='b', color='r', alpha=0.1):
+    alpha = 2*np.pi/n
+    a = R*np.sin(np.pi/n)
+    beta = np.arccos((a)/r)
+    theta_arc = np.pi/2-np.pi/n+np.arccos((a)/r)
+    theta_petal = 2*theta_arc
+    # circle((0, 0), R, 'g')
+    # circle((0, 0), R/2, 'g')
+    center1 = (np.cos(theta+alpha/2)*R +
+               center[0], np.sin(theta+alpha/2)*R+center[1])
+    center2 = (np.cos(theta+alpha/2-2*np.pi/n)*R +
+               center[0], np.sin(theta+alpha/2-2*np.pi/n)*R+center[1])
+    if abs(r - a) < 1e-12:
+        arc = arc_degree_p(center1, r, np.pi+alpha/2+theta,
+                           np.pi+alpha/2+theta+theta_arc, color)
+        arc_inverse = arc_degree_p(center2, r, np.pi/2+theta,
+                                   np.pi/2+theta+theta_arc, color)
+    elif r > a:
+        arc = arc_degree_p(center1, r, np.pi+alpha/2+theta,
+                           np.pi+alpha/2+theta+theta_arc, color)
+        arc_inverse = arc_degree_p(center2, r, np.pi/2-beta+theta,
+                                   np.pi/2-beta+theta+theta_arc, color)
+    elif r < a:
+        print("r=", r, ",a=", a)
+        print('r<a,不能形成花瓣。')
+    # plt.plot(center1[0], center1[1], marker='o', color='r')
+    # plt.plot(center2[0], center2[1], marker='o', color='b')
+    x1 = arc[0]
+    y1 = arc[1]
+    x2 = arc_inverse[0]
+    y2 = arc_inverse[1]
+    merged_x = np.concatenate((x1, x2))
+    merged_y = np.concatenate((y1, y2))
+    plt.axis('equal')
+
+    plt.fill(merged_x, merged_y, colorf)
+    # plt.fill(x1, y1, colorf)
+    # plt.fill(x2, y2, colorf)
+    plt.plot(x1, y1, color, alpha)
+    plt.plot(x2, y2, color, alpha)
+
+
 # arc_degree_fill((0, 0), 1, 0, np.pi/2, 'r')
 # n_lily_petal_fill((0, 0), 1, 4, np.pi/2, 'b')
 # arc_fill((1, 1), (1, 0), (0, 0), 'g')
 # arc_contour((1, 1), (1, 0), (0, 0), 'r')
 # # arc_dot((1, 1), (1, 0), (0, 0))
 # arc_inverse_dot((1, 1), (1, 0), (0, 0))
+# n_mandala_petal_fill((0, 0), 1, 2, 6, 0, '#f0f', '#0ff', 0.5)
 # plt.show()
